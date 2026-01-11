@@ -52,9 +52,14 @@ class Main:
         path = os.path.join("data", filename)
 
         # ---- Sorting preference ----
-        sort_data = input("Sort data? (yes/no): ").strip().lower() == "yes"
-        successful_symbols = []
+        sort_input = input("Sort data? (yes/no): ").strip().lower()
 
+        if sort_input not in ("yes", "no"):
+            print("Invalid input. Please enter 'yes' or 'no'.")
+            self.logger.error(f"Invalid sort input: {sort_input}")
+            return
+
+        sort_data = sort_input == "yes"
         try:
             stocks = self.stock_loader.load_stocks(path)
 
@@ -95,7 +100,14 @@ class Main:
             self.logger.error("Unexpected error", exc_info=True)
 
         finally:
-            save_successful = input("Do you want to save successful symbols? (yes/no): ").strip().lower() == "yes"
+            save_input = input("Do you want to save successful symbols? (yes/no): ").strip().lower()
+
+            if save_input not in ("yes", "no"):
+                print("Invalid input. Please enter 'yes' or 'no'.")
+                self.logger.error(f"Invalid save option input: {save_input}")
+                return
+
+            save_successful = save_input == "yes"
 
             if successful_symbols and save_successful:
                 output_filename = input("Enter the filename to save successful symbols: ").strip()
