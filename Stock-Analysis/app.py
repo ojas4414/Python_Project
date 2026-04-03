@@ -83,16 +83,19 @@ class Main:
             )
 
         except FileNotFoundError:
-            print(f"Error: File '{filename}' not found.")
+            print(f"Error: File '{filename}' not found in the 'data' folder. Please check the respective filename and location.")
+            print("Please check for spelling mistakes or ensure the file exists in your directory")
             self.logger.error(f"File not found: {filename}")
+          
 
         except ValueError as e:
             print(f"Error: Invalid data format - {e}")
             self.logger.error(f"Invalid data format: {e}")
 
         except Exception as e:
-            print(f"Unexpected error occurred: {e}")
-            self.logger.error("Unexpected error", exc_info=True)
+            print("Unexpected error occurred. Please check your input or try again.")
+            print("Ensure that the input is of  the correct format ")
+            self.logger.error(f"Unexpected error:{e}", exc_info=True)
 
         finally:
             save_successful = input("Do you want to save successful symbols? (yes/no): ").strip().lower() == "yes"
